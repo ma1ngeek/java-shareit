@@ -76,7 +76,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private BookingDtoItem getFirstBookingDtoItem(List<Booking> list) {
-        return (list != null && list.size() > 0) ? BookingMapper.toBookingDtoItem(list.get(0)) : null;
+        return (list != null && !list.isEmpty()) ? BookingMapper.toBookingDtoItem(list.get(0)) : null;
     }
 
     @Override
