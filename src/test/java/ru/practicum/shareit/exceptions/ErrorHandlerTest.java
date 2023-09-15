@@ -1,17 +1,12 @@
 package ru.practicum.shareit.exceptions;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.PropertyEditorRegistry;
+
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+
 
 import javax.persistence.EntityNotFoundException;
-import java.beans.PropertyEditor;
-import java.util.List;
+
 import java.util.Map;
 import java.util.NoSuchElementException;
 
