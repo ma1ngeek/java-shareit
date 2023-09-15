@@ -14,12 +14,6 @@ import java.util.NoSuchElementException;
 @Slf4j
 @RestControllerAdvice("ru.practicum.shareit")
 public class ErrorHandler {
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public Map<String, String> handleValidationException(final ConflictException e) {
-        log.info("Статус {}: {}",HttpStatus.CONFLICT,e.getMessage());
-        return Map.of("Conflict in data", e.getMessage());
-    }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
