@@ -15,6 +15,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
+import static ru.practicum.shareit.common.Constants.USER_ID_HEADER;
+
 @Slf4j
 @RestController
 @RequestMapping("/items")
@@ -26,7 +28,7 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<Object> addItem(@Validated({Create.class}) @RequestBody ItemDtoPost dto,
-                                          @RequestHeader("X-Sharer-User-Id") Long userId) {
+                                          @RequestHeader(USER_ID_HEADER) Long userId) {
         log.info("POST /items {} userId={}", dto, userId);
         return client.createItem(dto, userId);
     }
@@ -34,20 +36,20 @@ public class ItemController {
     @PatchMapping("/{itemId}")
     public ResponseEntity<Object> updateItem(@Validated({Update.class}) @RequestBody ItemDtoPost dto,
                                              @PathVariable long itemId,
-                                             @RequestHeader("X-Sharer-User-Id") Long userId) {
+                                             @RequestHeader(USER_ID_HEADER) Long userId) {
         log.info("PATCH /items/{}/", itemId);
         return client.updateItem(dto, itemId, userId);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getItemById(@PathVariable long id,
-                                              @RequestHeader("X-Sharer-User-Id") Long userId) {
+                                              @RequestHeader(USER_ID_HEADER) Long userId) {
         log.info("GET /items/{}/", id);
         return client.getItem(id, userId);
     }
 
     @GetMapping
-    public ResponseEntity<Object> getItemsByOwner(@RequestHeader("X-Sharer-User-Id") Long userId,
+    public ResponseEntity<Object> getItemsByOwner(@RequestHeader(USER_ID_HEADER) Long userId,
                                                   @RequestParam(defaultValue = "0")
                                                   @Min(0) int from,
                                                   @RequestParam(defaultValue = "10")
@@ -62,7 +64,7 @@ public class ItemController {
                                          @Min(0) int from,
                                          @RequestParam(defaultValue = "10")
                                          @Min(0) int size,
-                                         @RequestHeader("X-Sharer-User-Id") Long userId) {
+                                         @RequestHeader(USER_ID_HEADER) Long userId) {
         log.info("GET /items/search");
         return client.search(text, from, size, userId);
     }
@@ -70,7 +72,7 @@ public class ItemController {
     @PostMapping("/{itemId}/comment")
     public ResponseEntity<Object> createComment(@Valid @RequestBody CommentDtoPost text,
                                                 @PathVariable Long itemId,
-                                                @RequestHeader("X-Sharer-User-Id") Long userId) {
+                                                @RequestHeader(USER_ID_HEADER) Long userId) {
         log.info("POST /items/{}/comment {}", itemId, text);
         return client.createComment(text, itemId, userId);
     }

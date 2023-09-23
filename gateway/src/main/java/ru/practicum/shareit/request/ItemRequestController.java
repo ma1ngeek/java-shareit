@@ -18,6 +18,8 @@ import ru.practicum.shareit.request.dto.ItemRequestDtoPost;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
+import static ru.practicum.shareit.common.Constants.USER_ID_HEADER;
+
 @Slf4j
 @RestController
 @RequestMapping(path = "/requests")
@@ -29,20 +31,20 @@ public class ItemRequestController {
     @PostMapping
     public ResponseEntity<Object> createRequest(@Validated({Create.class})
                                         @RequestBody ItemRequestDtoPost request,
-                                                @RequestHeader("X-Sharer-User-Id") Long userId) {
+                                                @RequestHeader(USER_ID_HEADER) Long userId) {
         log.info("POST /requests {}", request);
         return client.create(request, userId);
     }
 
     @GetMapping("/{requestId}")
     public ResponseEntity<Object> getById(@PathVariable Long requestId,
-                                          @RequestHeader("X-Sharer-User-Id") Long userId) {
+                                          @RequestHeader(USER_ID_HEADER) Long userId) {
         log.info("GET /requests/{}/", requestId);
         return client.getById(requestId, userId);
     }
 
     @GetMapping
-    public ResponseEntity<Object> findAllByUserId(@RequestHeader("X-Sharer-User-Id") Long userId) {
+    public ResponseEntity<Object> findAllByUserId(@RequestHeader(USER_ID_HEADER) Long userId) {
         log.info("GET /requests/");
         return client.getByUserId(userId);
     }
@@ -52,7 +54,7 @@ public class ItemRequestController {
                                                 @PositiveOrZero int from,
                                                 @RequestParam(defaultValue = "10")
                                                 @Positive int size,
-                                                @RequestHeader("X-Sharer-User-Id") Long userId) {
+                                                @RequestHeader(USER_ID_HEADER) Long userId) {
         log.info("GET /requests/all?from={}&size={}", from, size);
         return client.getAll(from, size, userId);
     }
